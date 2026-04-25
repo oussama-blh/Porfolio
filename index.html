@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>// root@portfolio — Cybersecurity Engineer & Full-Stack Developer</title>
+<meta name="description" content="Personal portfolio of a Cybersecurity Engineer and Full-Stack Web Developer. Pentesting, ethical hacking, web applications, and security audits." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg-elev: #111114;
+    --bg-card: #131318;
+    --border: #1f1f26;
+    --border-strong: #2a2a33;
+    --text: #e6e6ea;
+    --text-dim: #9a9aa3;
+    --text-mute: #6a6a73;
+    --accent: #00ff88;
+    --accent-2: #00bcd4;
+    --accent-soft: rgba(0, 255, 136, 0.12);
+    --danger: #ff4d6d;
+    --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --shadow-glow: 0 0 0 1px rgba(0,255,136,0.18), 0 8px 40px -12px rgba(0,255,136,0.35);
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(0,255,136,0.06), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(0,188,212,0.05), transparent 45%);
+  }
+
+  /* grid pattern overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============ NAVBAR ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10,10,11,0.7);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s ease, background .3s ease;
+  }
+  .nav.scrolled {
+    border-bottom-color: var(--border);
+    background: rgba(10,10,11,0.85);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+  .logo {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .logo .prompt { color: var(--accent); }
+  .logo .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .nav-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .nav-links a {
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: var(--text-dim);
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover { color: var(--accent); background: var(--accent-soft); }
+  .nav-links .num { color: var(--accent); margin-right: 6px; opacity: .8; }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 8px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    color: var(--accent);
+    transition: all .2s;
+  }
+  .nav-cta:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .menu-toggle { display: none; }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    padding: 80px 0 100px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 22px;
+  }
+  .hero h1 .name { display: block; color: var(--text); }
+  .hero h1 .role {
+    display: block;
+    font-family: var(--mono);
+    font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+    font-weight: 400;
+    color: var(--accent);
+    margin-top: 14px;
+    min-height: 1.6em;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 .role::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--accent);
+    animation: blink 1s steps(1) infinite;
+  }
+  .hero p.bio {
+    font-size: 1.08rem;
+    color: var(--text-dim);
+    max-width: 580px;
+    margin-bottom: 36px;
+  }
+  .hero p.bio code {
+    font-family: var(--mono);
+    background: var(--bg-card);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--accent);
+    font-size: .92em;
+    border: 1px solid var(--border);
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .btn {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 13px 22px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all .25s;
+    border: 1px solid transparent;
+    font-weight: 500;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 4px 24px -6px rgba(0,255,136,0.5);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -8px rgba(0,255,136,0.7), 0 0 0 4px var(--accent-soft);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  .hero-socials {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .hero-socials .line { width: 40px; height: 1px; background: var(--border-strong); }
+  .icon-btn {
+    width: 38px; height: 38px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    transition: all .25s;
+    background: var(--bg-card);
+  }
+  .icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px -4px var(--accent);
+  }
+  .icon-btn svg { width: 17px; height: 17px; }
+
+  /* terminal card */
+  .terminal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: var(--mono);
+    font-size: 13px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-head {
+    background: var(--bg-elev);
+    padding: 11px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .term-dot.r { background: #ff5f56; }
+  .term-dot.y { background: #ffbd2e; }
+  .term-dot.g { background: #27c93f; }
+  .term-title {
+    margin-left: auto;
+    color: var(--text-mute);
+    font-size: 12px;
+  }
+  .term-body {
+    padding: 20px;
+    color: var(--text-dim);
+    line-height: 1.85;
+  }
+  .term-body .cmd { color: var(--text); }
+  .term-body .cmd::before { content: '$ '; color: var(--accent); }
+  .term-body .ok { color: var(--accent); }
+  .term-body .key { color: var(--accent-2); }
+  .term-body .str { color: #f7c948; }
+  .term-body .com { color: var(--text-mute); }
+
+  /* ============ SECTIONS ============ */
+  section { padding: 110px 0; position: relative; }
+  .section-head {
+    margin-bottom: 56px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+  }
+  .section-title {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border-strong), transparent);
+    margin-left: 8px;
+  }
+
+  /* ============ ABOUT ============ */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .about-text code {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: .92em;
+  }
+
+  .skills {
+    display: grid;
+    gap: 22px;
+  }
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: border-color .25s, transform .25s;
+  }
+  .skill-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .skill-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .skill-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+  }
+  .skill-icon svg { width: 18px; height: 18px; }
+  .skill-card.dev .skill-icon { background: rgba(0,188,212,0.12); color: var(--accent-2); }
+  .skill-head h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .skill-head .label {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .skill-tags span {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 5px 11px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    color: var(--text-dim);
+    transition: color .2s, border-color .2s;
+  }
+  .skill-card:hover .skill-tags span { color: var(--text); }
+  .skill-card.sec .skill-tags span:hover { color: var(--accent); border-color: var(--accent); }
+  .skill-card.dev .skill-tags span:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+  /* ============ PROJECTS ============ */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 22px;
+  }
+  .project {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at var(--mx,50%) var(--my,0%), rgba(0,255,136,0.08), transparent 40%);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+  .project:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .project:hover::before { opacity: 1; }
+  .project-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .project-folder {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+  }
+  .project-folder svg { width: 22px; height: 22px; }
+  .project-links { display: flex; gap: 8px; }
+  .project-links a {
+    width: 32px; height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    color: var(--text-mute);
+    transition: color .2s, background .2s;
+  }
+  .project-links a:hover { color: var(--accent); background: var(--accent-soft); }
+  .project-links svg { width: 16px; height: 16px; }
+  .project h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .project p {
+    color: var(--text-dim);
+    font-size: .94rem;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-mute);
+  }
+  .project-tags span { padding: 3px 0; }
+  .project-tags span:not(:last-child)::after { content: '·'; margin-left: 6px; color: var(--border-strong); }
+
+  /* ============ SERVICES ============ */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .service {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    background: var(--bg-card);
+    transition: all .3s;
+    position: relative;
+  }
+  .service:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-soft);
+    transform: translateY(-3px);
+  }
+  .service-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-bottom: 18px;
+  }
+  .service-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    margin-bottom: 18px;
+  }
+  .service-icon svg { width: 22px; height: 22px; }
+  .service h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .service p { color: var(--text-dim); font-size: .94rem; }
+
+  /* ============ CONTACT ============ */
+  .contact {
+    text-align: center;
+  }
+  .contact .section-head { justify-content: center; }
+  .contact-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+  }
+  .contact-card h2 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .contact-card p {
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    max-width: 440px;
+    margin-inline: auto;
+  }
+  .contact-links {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 12px 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--bg-elev);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all .25s;
+    color: var(--text);
+  }
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .contact-link svg { width: 16px; height: 16px; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mute);
+  }
+  .footer-meta .ok { color: var(--accent); }
+  .footer-socials { display: flex; gap: 10px; }
+
+  /* ============ ANIMATIONS ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-elev);
+      border-bottom: 1px solid var(--border);
+      padding: 14px;
+    }
+    .nav-links.open a { padding: 12px 14px; }
+    .menu-toggle {
+      display: grid;
+      place-items: center;
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+    }
+    .menu-toggle svg { width: 18px; height: 18px; }
+    .nav-cta { display: none; }
+    section { padding: 80px 0; }
+  }
+  @media (max-width: 560px) {
+    .container { padding: 0 20px; }
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+    .contact-card { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo"><span class="prompt">~/</span>root.dev<span class="cursor"></span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about"><span class="num">01.</span>about</a>
+      <a href="#projects"><span class="num">02.</span>projects</a>
+      <a href="#services"><span class="num">03.</span>services</a>
+      <a href="#contact"><span class="num">04.</span>contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">./connect.sh</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-tag">available for select engagements</div>
+      <h1>
+        <span class="name">Oussama Belil.</span>
+        <span class="role" id="typed"></span>
+      </h1>
+      <p class="bio">
+        I build resilient web applications and break the ones that aren't. I work at the
+        intersection of <code>offensive security</code> and <code>full-stack engineering</code> —
+        shipping production systems and pressure-testing them like an attacker would.
+      </p>
+      <div class="cta-row">
+        <a href="#projects" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          View Work
+        </a>
+        <a href="#contact" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get in Touch
+        </a>
+      </div>
+      <div class="hero-socials">
+        <span>// connect</span>
+        <span class="line"></span>
+        <a href="https://github.com" target="_blank" rel="noopener" class="icon-btn" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+        </a>
+        <a href="https://t.me" target="_blank" rel="noopener" class="icon-btn" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="terminal" aria-hidden="true">
+      <div class="term-head">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-title">~/whoami.sh</span>
+      </div>
+      <div class="term-body">
+        <div class="cmd">whoami</div>
+        <div><span class="ok">→</span> security_engineer + full_stack_dev</div>
+        <div class="cmd">cat focus.json</div>
+        <div>{</div>
+        <div>&nbsp;&nbsp;<span class="key">"offensive"</span>: [<span class="str">"web"</span>, <span class="str">"network"</span>, <span class="str">"osint"</span>],</div>
+        <div>&nbsp;&nbsp;<span class="key">"build"</span>: [<span class="str">"react"</span>, <span class="str">"node"</span>, <span class="str">"postgres"</span>],</div>
+        <div>&nbsp;&nbsp;<span class="key">"mindset"</span>: <span class="str">"break it, then ship it"</span></div>
+        <div>}</div>
+        <div class="cmd">uptime</div>
+        <div><span class="ok">●</span> shipping since 2019 <span class="com"># still curious</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-num">01.</span>
+      <h2 class="section-title">About</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a hybrid engineer — half builder, half breaker. My day-to-day moves between
+          <strong>writing production code</strong> and <strong>auditing it for the things attackers
+          actually exploit</strong>.
+        </p>
+        <p>
+          On the offensive side I work on web application pentesting, network reconnaissance, and
+          OSINT — usually as part of authorized engagements or CTF research. On the build side I
+          ship full-stack web apps with a focus on clean APIs, secure auth, and infrastructure
+          that doesn't fall over at 3am.
+        </p>
+        <p>
+          I care about <code>real</code> security — not checklist theater — and I write code that's
+          meant to be read. If you're shipping something where correctness and safety both matter,
+          we'll get along.
+        </p>
+      </div>
+
+      <div class="skills">
+        <div class="skill-card sec reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Security</h3>
+            <span class="label">// offense + defense</span>
+          </div>
+          <div class="skill-tags">
+            <span>Web Pentesting</span>
+            <span>Ethical Hacking</span>
+            <span>OSINT</span>
+            <span>Network Recon</span>
+            <span>Burp Suite</span>
+            <span>Nmap</span>
+            <span>Metasploit</span>
+            <span>Wireshark</span>
+            <span>OWASP Top 10</span>
+            <span>CTF</span>
+          </div>
+        </div>
+
+        <div class="skill-card dev reveal">
+          <div class="skill-head">
+            <div class="skill-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3>Development</h3>
+            <span class="label">// stack</span>
+          </div>
+          <div class="skill-tags">
+            <span>TypeScript</span>
+            <span>React</span>
+            <span>Next.js</span>
+            <span>Node.js</span>
+            <span>Python</span>
+            <span>PostgreSQL</span>
+            <span>MongoDB</span>
+            <span>Redis</span>
+            <span>Docker</span>
+            <span>Linux</span>
+            <span>CI/CD</span>
+            <span>AWS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-num">02.</span>
+      <h2 class="section-title">Selected Work</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="projects-grid">
+
+      <article class="project reveal">
+        <div class="project-head">
+          <div class="project-folder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="#" target="_blank" rel="noopener" aria-label="External link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v7H3V3h7"/></svg>
+            </a>
+          </div>
+        </div>
+        <h3>recon-cli</h3>
+        <p>A modular OSINT and recon toolkit that aggregates results from passive sources into a single, queryable timeline. Built for engagement reports.</p>
+        <div class="project-tags">
+          <span>Python</span><span>asyncio</span><span>SQLite</span><span>Click</span>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <div class="project-folder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+          </div>
+        </div>
+        <h3>vault-auth</h3>
+        <p>Production-grade auth service with WebAuthn, TOTP, refresh-token rotation, and audit logs. Drop-in for Node apps that need real session security.</p>
+        <div class="project-tags">
+          <span>TypeScript</span><span>Node.js</span><span>PostgreSQL</span><span>Redis</span>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <div class="project-folder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="#" target="_blank" rel="noopener" aria-label="External link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v7H3V3h7"/></svg>
+            </a>
+          </div>
+        </div>
+        <h3>logsense</h3>
+        <p>Self-hosted log analysis dashboard with alert rules, anomaly detection on auth events, and a query language inspired by Splunk SPL.</p>
+        <div class="project-tags">
+          <span>Next.js</span><span>ClickHouse</span><span>Docker</span><span>Go</span>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <div class="project-folder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+          </div>
+        </div>
+        <h3>xss-lab</h3>
+        <p>Intentionally vulnerable training app with 20 progressive XSS challenges — DOM, stored, mutation, CSP bypass — and write-ups for each level.</p>
+        <div class="project-tags">
+          <span>JavaScript</span><span>Express</span><span>Education</span>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <div class="project-folder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="#" target="_blank" rel="noopener" aria-label="External link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v7H3V3h7"/></svg>
+            </a>
+          </div>
+        </div>
+        <h3>commerce-edge</h3>
+        <p>Full e-commerce stack with edge-rendered storefront, Stripe billing, inventory webhooks, and a hardened admin panel with RBAC + audit trail.</p>
+        <div class="project-tags">
+          <span>Next.js</span><span>tRPC</span><span>Prisma</span><span>Stripe</span>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-head">
+          <div class="project-folder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+          </div>
+        </div>
+        <h3>headers-check</h3>
+        <p>Lightweight CLI + GitHub Action that grades a site's security headers (CSP, HSTS, COOP, COEP) and fails the build on regressions.</p>
+        <div class="project-tags">
+          <span>Go</span><span>GitHub Actions</span><span>DevSecOps</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-num">03.</span>
+      <h2 class="section-title">What I Do</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="services-grid">
+
+      <div class="service reveal">
+        <div class="service-num">01 / build</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Web App Development</h3>
+        <p>End-to-end full-stack builds — typed APIs, React/Next frontends, postgres-backed data layers, deployed and observable.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-num">02 / audit</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Security Audits</h3>
+        <p>Code-level review of authentication, session handling, access control, and input boundaries — with prioritized findings and fixes.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-num">03 / pentest</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <h3>Vulnerability Assessment</h3>
+        <p>Black-box and authenticated testing of web apps and APIs against the OWASP Top 10 and beyond — clear write-ups, reproducible PoCs.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-num">04 / harden</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Hardening & DevSecOps</h3>
+        <p>CI/CD pipelines with secret scanning, dependency policy, container hardening, and security headers enforced as code.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-num">05 / advise</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Technical Consulting</h3>
+        <p>Architecture review, threat modeling, and pragmatic security guidance for teams shipping fast without leaving doors open.</p>
+      </div>
+
+      <div class="service reveal">
+        <div class="service-num">06 / train</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Training & Workshops</h3>
+        <p>Hands-on sessions for dev teams: secure coding, OWASP fundamentals, and live exploit demos against your own staging stack.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-num">04.</span>
+      <h2 class="section-title">Connect</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="contact-card reveal">
+      <h2>Let's build something — or break it together.</h2>
+      <p>Open to freelance engagements, security audits, and full-stack work. Reach out — I usually respond within 24 hours.</p>
+      <div class="contact-links">
+        <a href="https://github.com" target="_blank" rel="noopener" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://t.me" target="_blank" rel="noopener" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+          Telegram Channel
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-meta">
+      <span class="ok">●</span> built with care · <span id="year"></span> · all systems nominal
+    </div>
+    <div class="footer-socials">
+      <a href="https://github.com" target="_blank" rel="noopener" class="icon-btn" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.79.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="https://t.me" target="_blank" rel="noopener" class="icon-btn" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // === sticky nav shadow on scroll ===
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 12);
+  });
+
+  // === mobile menu ===
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // === typing effect ===
+  const phrases = [
+    'Cybersecurity Engineer & Full-Stack Developer',
+    'I build systems. I break systems.',
+    'Pentester / Web Engineer / OSINT',
+    'Shipping secure software, by default.'
+  ];
+  const target = document.getElementById('typed');
+  let p = 0, i = 0, deleting = false;
+
+  function type() {
+    const current = phrases[p];
+    target.textContent = current.slice(0, i);
+    if (!deleting && i < current.length) {
+      i++; setTimeout(type, 55 + Math.random()*30);
+    } else if (deleting && i > 0) {
+      i--; setTimeout(type, 25);
+    } else {
+      if (!deleting) { deleting = true; setTimeout(type, 1800); }
+      else { deleting = false; p = (p + 1) % phrases.length; setTimeout(type, 300); }
+    }
+  }
+  type();
+
+  // === reveal on scroll ===
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // === project hover spotlight ===
+  document.querySelectorAll('.project').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // === year ===
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
