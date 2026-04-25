@@ -58,6 +58,33 @@
 
   ::selection { background: var(--accent); color: #000; }
 
+  /* === scroll progress bar === */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(to right, var(--accent), var(--accent-2));
+    z-index: 200;
+    box-shadow: 0 0 12px var(--accent);
+    transition: width .08s linear;
+  }
+
+  /* === custom cursor glow === */
+  .cursor-glow {
+    position: fixed;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,136,0.10), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity .3s;
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+  @media (max-width: 900px) { .cursor-glow { display: none; } }
+
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
@@ -630,14 +657,112 @@
   .footer-socials { display: flex; gap: 10px; }
 
   /* ============ ANIMATIONS ============ */
+  /* spring-like cubic-bezier mimics framer-motion default spring */
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .7s ease, transform .7s ease;
+    transform: translateY(28px) scale(.985);
+    transition:
+      opacity .8s cubic-bezier(.22, 1, .36, 1),
+      transform .9s cubic-bezier(.34, 1.56, .64, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
   }
   .reveal.visible {
     opacity: 1;
     transform: none;
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity .8s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.34, 1.56, .64, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-left.visible { opacity: 1; transform: none; }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity .8s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.34, 1.56, .64, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-right.visible { opacity: 1; transform: none; }
+
+  /* hero entrance choreography */
+  .hero-anim > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroIn .9s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+  @keyframes heroIn {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* shimmer effect on role text */
+  .hero h1 .role {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+  @keyframes shimmer {
+    to { background-position: -200% 0; }
+  }
+  .hero h1 .role::after {
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  /* tilt effect base */
+  .tilt {
+    transform-style: preserve-3d;
+    transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+    will-change: transform;
+  }
+  .tilt-inner {
+    transform: translateZ(30px);
+  }
+
+  /* magnetic button base */
+  .magnetic { transition: transform .25s cubic-bezier(.22, 1, .36, 1); }
+
+  /* terminal tilt resting state */
+  .terminal {
+    transform: perspective(1000px) rotateY(-2deg) rotateX(2deg);
+    transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  /* glow pulse on primary button */
+  .btn-primary { position: relative; overflow: hidden; }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+  }
+  .btn-primary:hover::after { transform: translateX(100%); }
+
+  /* card lift on hover, smoother */
+  .project, .service, .skill-card, .contact-link, .icon-btn, .btn {
+    transition:
+      transform .35s cubic-bezier(.34, 1.56, .64, 1),
+      border-color .25s ease,
+      box-shadow .35s ease,
+      background .25s ease,
+      color .2s ease;
+  }
+
+  /* respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+    .terminal { animation: none; }
+    .cursor-glow { display: none; }
   }
 
   /* ============ RESPONSIVE ============ */
@@ -678,6 +803,9 @@
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="container nav-inner">
@@ -698,28 +826,28 @@
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
   <div class="container hero-grid">
-    <div>
-      <div class="hero-tag">available for select engagements</div>
+    <div class="hero-anim">
+      <div class="hero-tag" style="--d:100ms">available for select engagements</div>
       <h1>
         <span class="name">Oussama Belil.</span>
-        <span class="role" id="typed"></span>
+        <span class="role" id="typed" style="--d:400ms"></span>
       </h1>
-      <p class="bio">
+      <p class="bio" style="--d:600ms">
         I build resilient web applications and break the ones that aren't. I work at the
         intersection of <code>offensive security</code> and <code>full-stack engineering</code> —
         shipping production systems and pressure-testing them like an attacker would.
       </p>
-      <div class="cta-row">
-        <a href="#projects" class="btn btn-primary">
+      <div class="cta-row" style="--d:750ms">
+        <a href="#projects" class="btn btn-primary magnetic">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           View Work
         </a>
-        <a href="#contact" class="btn btn-ghost">
+        <a href="#contact" class="btn btn-ghost magnetic">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
           Get in Touch
         </a>
       </div>
-      <div class="hero-socials">
+      <div class="hero-socials" style="--d:900ms">
         <span>// connect</span>
         <span class="line"></span>
         <a href="https://github.com" target="_blank" rel="noopener" class="icon-btn" aria-label="GitHub">
@@ -734,7 +862,7 @@
       </div>
     </div>
 
-    <div class="terminal" aria-hidden="true">
+    <div class="terminal tilt" id="terminalTilt" aria-hidden="true">
       <div class="term-head">
         <span class="term-dot r"></span>
         <span class="term-dot y"></span>
@@ -1121,7 +1249,17 @@
   }
   type();
 
-  // === reveal on scroll ===
+  // === reveal on scroll with stagger inside groups ===
+  const STAGGER_SELECTORS = ['.projects-grid', '.services-grid', '.skills'];
+  STAGGER_SELECTORS.forEach(sel => {
+    document.querySelectorAll(sel).forEach(group => {
+      [...group.children].forEach((child, i) => {
+        child.classList.add('reveal');
+        child.style.setProperty('--reveal-delay', (i * 80) + 'ms');
+      });
+    });
+  });
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -1129,8 +1267,33 @@
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => io.observe(el));
+
+  // === scroll progress bar ===
+  const progress = document.getElementById('scrollProgress');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    progress.style.width = (scrolled * 100) + '%';
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // === cursor glow follow ===
+  const glow = document.getElementById('cursorGlow');
+  let glowX = window.innerWidth / 2, glowY = window.innerHeight / 2;
+  let targetX = glowX, targetY = glowY;
+  window.addEventListener('mousemove', (e) => {
+    targetX = e.clientX; targetY = e.clientY;
+  });
+  function animateGlow() {
+    glowX += (targetX - glowX) * 0.12;
+    glowY += (targetY - glowY) * 0.12;
+    glow.style.transform = `translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
 
   // === project hover spotlight ===
   document.querySelectorAll('.project').forEach(card => {
@@ -1140,6 +1303,41 @@
       card.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
+
+  // === magnetic buttons ===
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    document.querySelectorAll('.magnetic, .icon-btn, .contact-link').forEach(el => {
+      const strength = el.classList.contains('icon-btn') ? 0.35 : 0.25;
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
+  }
+
+  // === 3D tilt on terminal ===
+  const tilt = document.getElementById('terminalTilt');
+  if (tilt && !reduceMotion) {
+    let rafId = null;
+    tilt.addEventListener('mousemove', (e) => {
+      const r = tilt.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        tilt.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(0)`;
+      });
+    });
+    tilt.addEventListener('mouseleave', () => {
+      tilt.style.transform = '';
+    });
+  }
 
   // === year ===
   document.getElementById('year').textContent = new Date().getFullYear();
